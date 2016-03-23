@@ -1,0 +1,67 @@
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+
+{% macro extra() %}
+  <input name="_continue_editing" type="submit" class="btn btn-default" value="{{ _gettext('Save and Continue') }}" />
+{% endmacro %}
+
+{% block head %}
+    {{ super() }}
+    {{ lib.form_css() }}
+{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>{{ model }} <small>{{ model.id }}</small></h1>
+        {% block navlinks %}
+
+        {% endblock %}
+        {% block breadcrumb %}
+            <ol class="breadcrumb">
+                <li><a href="{{ admin_view.admin.index_view.url }}"><i class="fa fa-home"></i>{{ _gettext('Home') }}</a></li>
+                <li><a href="{{ admin_view.url }}"><i class="fa fa-list"></i>{{ admin_view.name }} {{ _gettext('List') }}</a></li>
+                <li class="active">{{ model }}</li>
+            </ol>
+        {% endblock %}
+    </section>
+    <section class="content">
+        <div class="row">
+            {% set has_menu = True %}
+            {% if admin_view.has_menu %}
+                {% set has_menu = True %}
+            {% endif %}
+
+            {% block form %}
+                {% call lib.form_tag(form) %}
+                  {{ lib.render_form(form, return_url, form_opts=form_opts, extra=extra(), has_menu=admin_view.has_menu) }}
+                {% endcall %}
+            {% endblock %}
+
+            {% if admin_view.has_menu %}
+                <div class="col-md-3">
+                    <div class="box box-solid">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Menu</h3>
+                            <div class="box-tools">
+                                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body no-padding">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li {% if 'edit' in request.url_rule.endpoint %}class="active"{% endif %}><a href="{{ url_for('.edit_view', id=model.id) }}">{{ _gettext('Edit') }}</a></li>
+                                {% for item in admin_view.edit_menu() %}
+                                    <li {% if item.is_active(item['endpoint']) %}class="active"{% endif %}><a href="{{ item['url'] }}">{{ _gettext(item['label']) }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block tail %}
+  {{ super() }}
+  {{ lib.form_js() }}
+{% endblock %}

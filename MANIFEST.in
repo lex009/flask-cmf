@@ -1,0 +1,2 @@
+recursive-include flask_cmf/templates *.html
+recursive-include flask_cmf/static *.js *.css

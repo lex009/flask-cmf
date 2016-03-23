@@ -1,0 +1,19 @@
+{% extends 'admin/model/list.html' %}
+
+{% block additional_header scoped %}
+<th></th>
+{% endblock %}
+
+{% block additional %}
+<td>
+    <a href="#"
+       data-url="{{ get_url('.ajax_reference', class_name=row._class_name, id=row.id) }}"
+       data-classname="{{row._class_name}}"
+       data-schema="{{ row.schema }}"
+       data-id="{{ row.id }}"
+       data-collection="{{ row.to_dbref().collection }}"
+       class="cmf-reference-choose">
+        <i class="fa fa-external-link"></i>
+    </a>
+</td>
+{% endblock %}
