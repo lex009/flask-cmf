@@ -15,9 +15,9 @@ setup(
         'blinker>=1.4',
         'flask-mongoengine>=0.7.1',
         'WTForms>=2.0.2',
-        'flask-lte-admin>=0.2'
+        'flask-admin-lte>=0.2'
     ],
     dependency_links=[
-        'git+git://github.com/lex009/flask-admin-lte#egg=flask-lte-admin-0.2'
+        'git+git://github.com/lex009/flask-admin-lte#egg=flask-admin-lte-0.2'
     ]
 )
