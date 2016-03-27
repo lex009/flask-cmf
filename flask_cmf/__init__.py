@@ -11,4 +11,4 @@ def cmf(app: Flask):
             jinja2.FileSystemLoader(os.path.join(get_root_path('flask_cmf'), 'templates')),
             blueprint.jinja_loader,
         ])
-    app.register_blueprint(Blueprint('flask_cmf', __name__, static_folder='static', static_url_path='/cmf'))
+    app.register_blueprint(Blueprint('flask_cmf', __name__, static_folder='static', static_url_path='/static/cmf'))
