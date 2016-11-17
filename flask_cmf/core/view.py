@@ -1,3 +1,6 @@
+import mongoengine
+import json
+import logging
 from flask import request, Response, abort, redirect, flash
 from flask_admin.contrib.mongoengine import ModelView
 from flask_admin.contrib.mongoengine.helpers import format_error
@@ -6,13 +9,7 @@ from flask_admin.model.helpers import get_mdict_item_or_list
 from flask_admin import expose
 from flask_babelex import gettext
 from wtforms.validators import regexp
-
-import mongoengine
 from mongoengine.base.common import get_document
-from mongoengine.context_managers import switch_db
-
-import json
-
 from bson import ObjectId
 
 from .models import ContentSchema, available_fields
@@ -20,9 +17,8 @@ from .form.widgets import PredefinedSelect
 from .form.form import CmfModelConverter
 from .fields import MultilangField
 
-import logging
 
-log = logging.getLogger("flask-admin.mongo")
+logger = logging.getLogger("flask-admin.mongo")
 
 schema_arg = 'schema_id'
 
@@ -179,7 +175,7 @@ class DbAwareView:
                 flash(gettext('Failed to create record. %(error)s',
                               error=format_error(ex)),
                       'error')
-                log.exception('Failed to create record.')
+                logger.exception('Failed to create record.')
 
             return False
         else:

@@ -1,6 +1,8 @@
 from wtforms.fields import FieldList, StringField, SelectField, FormField, TextAreaField
+from mongoengine import Document
 from wtforms.widgets import HiddenInput
 from wtforms.utils import unset_value
+from werkzeug.utils import MultiDict
 from wtforms import Form
 
 from bson import ObjectId
@@ -134,12 +136,22 @@ class GenericReferenceField(FormField):
 
         super(GenericReferenceField, self).__init__(GenericReferenceForm, label, validators, separator, **kwargs)
 
+    def process(self, formdata, data=unset_value):
+        super(GenericReferenceField, self).process(formdata, data)
+
+        if isinstance(data, Document):
+            # formdata = MultiDict([
+            #     ('id', data.pk),
+            #     ('class_name', data.__class__),
+            #     ('database', data._get_db()),
+            # ])
+            setattr(data, 'class_name', data.__class__.__name__)
+            setattr(data, 'database', data._get_db().name)
+            prefix = self.name + self.separator
+            self.form = self.form_class(formdata=formdata, obj=data, prefix=prefix)
+
     def populate_obj(self, obj, name):
-        candidate = getattr(obj, name, None)
-        if candidate is None and self.data['class_name'] != '':
-            class_ = get_document(self.data['class_name'])
-            candidate = class_(pk=ObjectId(self.data['id']))
-        if self.data['id'] == '':
-            candidate = None
+        class_ = get_document(self.data['class_name'])
+        candidate = class_(pk=ObjectId(self.data['id']))
 
         setattr(obj, name, candidate)

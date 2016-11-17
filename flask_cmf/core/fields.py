@@ -2,8 +2,11 @@ from mongoengine.base import BaseField
 from mongoengine.fields import DynamicField
 from babel import Locale
 from flask_babelex import get_locale
+import logging
 
 default_locale = Locale('en', 'US')
+
+logger = logging.getLogger(__name__)
 
 class TranslationsDict(dict):
 
@@ -37,6 +40,7 @@ class MultilangString:
 
     def __str__(self):
         locale = self.locale
+        locale.script = None
         locale_str = str(locale)
         if self.translations is None or len(self.translations) == 0:
             return ""
