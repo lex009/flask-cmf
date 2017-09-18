@@ -1,5 +1,6 @@
 from wtforms.widgets import HTMLString, html_params, Select
 from flask_babelex import gettext
+from flask import url_for
 
 
 class PredefinedSelect(Select):
@@ -32,17 +33,26 @@ class PredefinedSelect(Select):
 
 
 class ReferenceWidget:
+    
+    _edit_url = None
 
-    @staticmethod
-    def single_reference(field, html, extra_rows=None):
+    def __init__(self, edit_url=None):
+        
+        self._edit_url = edit_url
+        
+    def single_reference(self, field, html, extra_rows=None):
+        
         if extra_rows is None:
             extra_rows = []
 
         html.append('<td>')
 
         if field.data['id'] is not None:
-            html.append('<span class="cmf-reference-label"><a href="">' + str(field.object_data) + '</a></span>')
-        else:
+            edit_url = ''
+            if hasattr(field.object_data, 'view_endpoint'):
+                edit_url = url_for(field.object_data.view_endpoint + '.edit_view', id=str(field.data['id']))
+            html.append('<span class="cmf-reference-label"><a href="' + edit_url + '">' + str(field.object_data) + '</a></span>')
+        else: 
             html.append('<span class="cmf-reference-label"></span>')
 
         html.append('</td>')
