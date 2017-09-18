@@ -24,7 +24,4 @@ class CmfModelConverter(ModelConverter):
 
     @orm.converts('GenericReferenceField')
     def conv_GenericReference(self, model, field, kwargs):
-        edit_url = None
-        if hasattr(model, 'view_endpoint'):
-            edit_url = model.view_endpoint+'.edit_view'
-        return GenericReferenceField(edit_url=edit_url)
+        return GenericReferenceField()

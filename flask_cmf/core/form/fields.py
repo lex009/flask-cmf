@@ -130,9 +130,6 @@ class GenericReferenceField(FormField):
     widget = ReferenceWidget()
 
     def __init__(self, label=None, validators=None, separator='-', **kwargs):
-        if 'edit_url' in kwargs:
-            self.edit_url = kwargs['edit_url']
-            del kwargs['edit_url']
 
         super(GenericReferenceField, self).__init__(GenericReferenceForm, label, validators, separator, **kwargs)
 

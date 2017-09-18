@@ -33,12 +33,6 @@ class PredefinedSelect(Select):
 
 
 class ReferenceWidget:
-    
-    _edit_url = None
-
-    def __init__(self, edit_url=None):
-        
-        self._edit_url = edit_url
         
     def single_reference(self, field, html, extra_rows=None):
         
