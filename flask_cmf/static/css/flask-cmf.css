@@ -31,3 +31,16 @@
     width: 100%;
     height: 100%;
 }
+
+.cmf-list-form-item {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.cmf-list-form-select-addon {
+    width: 20%;
+}
+
+.cmf-list-form-select-addon-input {
+    width: 80% !important;
+}
