@@ -33,9 +33,7 @@ class PredefinedSelect(Select):
 
 
 class ReferenceWidget:
-        
-    def single_reference(self, field, html, extra_rows=None):
-        
+    def single_reference(field, html, extra_rows=None):
         if extra_rows is None:
             extra_rows = []
 
@@ -101,10 +99,8 @@ class TranslationWidget(object):
         else:
             html = ['<div class="input-group cmf-list-form-item">']
 
-        html.append('<div class="input-group-addon">')
-        html.append(fields['locale'](class_='cmf-list-form-control'))
-        html.append('</div>')
-        html.append(fields['text'](class_='cmf-list-form-control form-control'))
+        html.append(fields['locale'](class_='pull-left input-group-addon cmf-list-form-control cmf-list-form-select-addon'))
+        html.append(fields['text'](class_='cmf-list-form-control form-control cmf-list-form-select-addon-input'))
         html.append('<span class="input-group-btn">')
         html.append(DynamicListWidget.delete_btn())
         html.append('</span>')
