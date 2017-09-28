@@ -33,7 +33,7 @@ class PredefinedSelect(Select):
 
 
 class ReferenceWidget:
-    def single_reference(field, html, extra_rows=None):
+    def single_reference(self, field, html, extra_rows=None):
         if extra_rows is None:
             extra_rows = []
 
